@@ -1,3 +1,4 @@
+
 module.exports = {
   entry: './app/app.js',
   output: {
@@ -7,7 +8,13 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
-      HomePage: 'app/components/HomePage.js'
+      Account: 'app/components/Account.js',
+      HomePage: 'app/components/HomePage.js',
+      Main: 'app/components/Main.js',
+      Nav: 'app/components/Nav.js',
+      Transaction: 'app/components/Transaction.js',
+      SignIn: 'app/components/SignIn.js',
+      AccountInfo: 'app/components/AccountInfo.js'
     }
   },
   module: {

@@ -52,7 +52,7 @@
 	var HomePage = __webpack_require__(262);
 	var Main = __webpack_require__(263);
 	var Nav = __webpack_require__(264);
-	var Transaction = __webpack_require__(320);
+	var Transaction = __webpack_require__(321);
 
 	var _require = __webpack_require__(265),
 	    Router = _require.Router,
@@ -82,7 +82,26 @@
 	      return state;
 	  }
 	};
-	var combineReducer = Redux.combineReducers({ username: username });
+
+	var notification = function notification() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SHOW_NOTIFICATION':
+	      {
+	        return action.txt;
+	      }
+	    case 'HIDE_NOTIFICATION':
+	      {
+	        return null;
+	      }
+	    default:
+	      return state;
+	  }
+	};
+
+	var combineReducer = Redux.combineReducers({ username: username, notification: notification });
 	var store = Redux.createStore(combineReducer);
 
 	var requireLogin = function requireLogin(nextState, replace, next) {
@@ -24891,11 +24910,11 @@
 	        username: username.value,
 	        password: password.value
 	      }).then(function (res) {
-	        console.log(res);
 	        if (res.data.result === 0) {
-	          console.log('ok');
 	          dispatch({ type: 'LOGIN', username: username.value });
-	        } else {}
+	        } else {
+	          dispatch({ type: 'SHOW_NOTIFICATION', txt: 'Check your username or password again' });
+	        }
 	      }).catch(function (err) {
 	        return console.log(err);
 	      });
@@ -26629,6 +26648,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Nav = __webpack_require__(264);
+	var Notification = __webpack_require__(320);
 
 	var Main = function (_React$Component) {
 	  _inherits(Main, _React$Component);
@@ -26642,6 +26662,9 @@
 	  _createClass(Main, [{
 	    key: 'render',
 	    value: function render() {
+	      var notification = this.props.notification;
+
+	      var xhtml = notification != null ? _react2.default.createElement(Notification, { txt: notification }) : null;
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -26651,6 +26674,7 @@
 	          'This is Main'
 	        ),
 	        _react2.default.createElement(Nav, null),
+	        xhtml,
 	        this.props.children
 	      );
 	    }
@@ -26672,7 +26696,9 @@
 	  return Main;
 	}(_react2.default.Component);
 
-	module.exports = (0, _reactRedux.connect)()(Main);
+	module.exports = (0, _reactRedux.connect)(function (state) {
+	  return { notification: state.notification };
+	})(Main);
 
 /***/ }),
 /* 264 */
@@ -31769,6 +31795,62 @@
 
 /***/ }),
 /* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(185);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Notification = function (_React$Component) {
+	  _inherits(Notification, _React$Component);
+
+	  function Notification() {
+	    _classCallCheck(this, Notification);
+
+	    return _possibleConstructorReturn(this, (Notification.__proto__ || Object.getPrototypeOf(Notification)).apply(this, arguments));
+	  }
+
+	  _createClass(Notification, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.txt
+	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var dispatch = this.props.dispatch;
+
+	      setTimeout(function () {
+	        dispatch({ type: 'HIDE_NOTIFICATION' });
+	      }, 3000);
+	    }
+	  }]);
+
+	  return Notification;
+	}(_react2.default.Component);
+
+	module.exports = (0, _reactRedux.connect)()(Notification);
+
+/***/ }),
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

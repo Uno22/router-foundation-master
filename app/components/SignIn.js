@@ -13,12 +13,10 @@ class SignIn extends React.Component{
           username: username.value,
           password: password.value
         }).then(res => {
-          console.log(res)
           if (res.data.result === 0) {
-              console.log('ok')
             dispatch({type: 'LOGIN', username: username.value});
           } else {
-
+            dispatch({type: 'SHOW_NOTIFICATION', txt: 'Check your username or password again'});
           }
         }).catch(err => console.log(err));
     }

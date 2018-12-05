@@ -21,7 +21,21 @@ var username = (state = null, action) => {
       return state;
   }
 }
-var combineReducer = Redux.combineReducers({username});
+
+var notification = (state = null, action) => {
+  switch(action.type) {
+    case 'SHOW_NOTIFICATION': {
+      return action.txt;
+    }
+    case 'HIDE_NOTIFICATION': {
+      return null;
+    }
+    default:
+      return state;
+  }
+}
+
+var combineReducer = Redux.combineReducers({username, notification});
 var store = Redux.createStore(combineReducer);
 
 var requireLogin = (nextState, replace, next) => {

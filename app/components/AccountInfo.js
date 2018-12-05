@@ -1,12 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 class AccountInfo extends React.Component{
 
     logOut (e) {
         e.preventDefault();
         var {dispatch} = this.props;
-        dispatch({type: 'LOGOUT'});
+        
+        axios.get('/signOut')
+          .then(res => {
+            if (res.data.result === 0) {
+              dispatch({type: 'LOGOUT'});
+            }
+          })
+          .catch(err => console.log(err));
     }
 
   render(){

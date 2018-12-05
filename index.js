@@ -30,3 +30,8 @@ app.get('/getInfo', (req, res) => {
     }
     return res.send({result: -1, username: null});
 })
+
+app.get('/signOut', (req, res) => {
+    req.session.username = undefined;
+    res.send({result: 0});
+})

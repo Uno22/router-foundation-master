@@ -26650,7 +26650,7 @@
 
 	      _axios2.default.get('/getInfo').then(function (res) {
 	        if (res.data.result === 0) {
-	          dispatch({ type: 'LOGIN', username: res.username });
+	          dispatch({ type: 'LOGIN', username: res.data.username });
 	        } else {}
 	      }).catch(function (err) {
 	        return console.log(err);

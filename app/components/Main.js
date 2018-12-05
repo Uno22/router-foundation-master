@@ -19,7 +19,7 @@ class Main extends React.Component{
     axios.get('/getInfo')
     .then(res => {
       if (res.data.result === 0) {
-        dispatch({type: 'LOGIN', username: res.username});
+        dispatch({type: 'LOGIN', username: res.data.username});
       }else{
 
       }

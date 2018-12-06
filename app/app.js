@@ -8,6 +8,7 @@ var Transaction = require('Transaction');
 var {Router, Route, IndexRoute, hashHistory} = require('react-router');
 var Redux = require('redux');
 var {Provider} = require('react-redux');
+require('style!css!foundation-sites/dist/css/foundation.min.css');
 
 var username = (state = null, action) => {
   switch(action.type) {

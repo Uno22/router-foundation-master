@@ -29,7 +29,7 @@ class SignIn extends React.Component{
             <br/>
             <input type="password" placeholder="Password" ref="password"/>
             <br/>
-            <button type="submit">Sign In</button>
+            <button type="submit" className="button">Sign In</button>
         </form>
       </div>
     )
